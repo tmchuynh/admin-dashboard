@@ -204,8 +204,10 @@ $ $env:FLASK_ENV = "development"
 ```
 
 <br />
+
 > Start the app
-```bash
+
+``` bash
 $ flask run
 ```
 At this point, the app runs at `http://127.0.0.1:5000/`. 
