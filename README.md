@@ -33,36 +33,66 @@
 <hr> -->
 
 <p align="center">
-  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
-  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
-  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="#file-structure">File structure</a> &#xa0; | &#xa0;
   <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
   <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
-  <a href="#memo-license">License</a> &#xa0; | &#xa0;
-  <a href="https://github.com/tmchuynh" target="_blank">Author</a>
 </p>
 
 <br>
 
-## :dart: About ##
 
-Describe your project
+## :rocket: File structure ##
 
-## :sparkles: Features ##
+The project is coded using blueprints, app factory pattern, dual configuration profile (development and production) and an intuitive structure presented bellow:
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+```bash
+< PROJECT ROOT >
+   |
+   |-- apps/
+   |    |
+   |    |-- home/                           # A simple app that serve HTML files
+   |    |    |-- routes.py                  # Define app routes
+   |    |
+   |    |-- authentication/                 # Handles auth routes (login and register)
+   |    |    |-- routes.py                  # Define authentication routes  
+   |    |    |-- models.py                  # Defines models  
+   |    |    |-- forms.py                   # Define auth forms (login and register) 
+   |    |
+   |    |-- static/
+   |    |    |-- <css, JS, images>          # CSS files, Javascripts files
+   |    |
+   |    |-- templates/                      # Templates used to render pages
+   |    |    |-- includes/                  # HTML chunks and components
+   |    |    |    |-- navigation.html       # Top menu component
+   |    |    |    |-- sidebar.html          # Sidebar component
+   |    |    |    |-- footer.html           # App Footer
+   |    |    |    |-- scripts.html          # Scripts common to all pages
+   |    |    |
+   |    |    |-- layouts/                   # Master pages
+   |    |    |    |-- base-fullscreen.html  # Used by Authentication pages
+   |    |    |    |-- base.html             # Used by common pages
+   |    |    |
+   |    |    |-- accounts/                  # Authentication pages
+   |    |    |    |-- login.html            # Login page
+   |    |    |    |-- register.html         # Register page
+   |    |    |
+   |    |    |-- home/                      # UI Kit Pages
+   |    |         |-- index.html            # Index page
+   |    |         |-- 404-page.html         # 404 page
+   |    |         |-- *.html                # All other pages
+   |    |    
+   |  config.py                             # Set up the app
+   |    __init__.py                         # Initialize the app
+   |
+   |-- requirements.txt                     # App Dependencies
+   |
+   |-- .env                                 # Inject Configuration via Environment
+   |-- run.py                               # Start the app - WSGI gateway
+   |
+   |-- ************************************************************************
+```
 
-## :rocket: Technologies ##
-
-The following tools were used in this project:
-
-- [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+<br />
 
 ## :white_check_mark: Requirements ##
 
@@ -71,27 +101,115 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 ## :checkered_flag: Starting ##
 
 ```bash
-# Clone this project
-$ git clone https://github.com/tmchuynh/admin-dashboard
+## ✨ Set up the MySql Database
 
-# Access
-$ cd admin-dashboard
+**Note:** Make sure your Mysql server is properly installed and accessible. 
 
-# Install dependencies
-$ yarn
+> **Step 1** - Create the MySql Database to be used by the app
 
-# Run the project
-$ yarn start
+- `Create a new MySql` database
+- `Create a new user` and assign full privilegies (read/write)
 
-# The server will initialize in the <http://localhost:3000>
+<br />
+
+> **Step 2** - Edit the `.env` to match your MySql DB credentials. Make sure `DB_ENGINE` is set to `mysql`.
+
+- `DB_ENGINE`  : `mysql` 
+- `DB_NAME`    : default value = `appseed_db`
+- `DB_HOST`    : default value = `localhost`
+- `DB_PORT`    : default value = `3306`
+- `DB_USERNAME`: default value = `appseed_db_usr`
+- `DB_PASS`    : default value = `pass`
+
+<br />
+
+Here is a sample:  
+
+```txt
+# .env sample
+
+DEBUG=False                 # False enables the MySql Persistence
+
+DB_ENGINE=mysql             # Database Driver
+DB_NAME=appseed_db          # Database Name
+DB_USERNAME=appseed_db_usr  # Database User
+DB_PASS=STRONG_PASS_HERE    # Password 
+DB_HOST=localhost           # Database HOST, default is localhost 
+DB_PORT=3306                # MySql port, default = 3306 
 ```
 
-## :memo: License ##
-
-This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
+<br />
 
 
-Made with :heart: by <a href="https://github.com/tmchuynh" target="_blank">Tina Huynh</a>
+## ✨ How to use it
+
+> Download the code 
+```bash
+$ # Get the code
+$ git clone https://github.com/tmchuynh/admin-dashboard
+$ cd admin-dashboard
+```
+
+<br />
+
+### 👉 Set Up for `Unix`, `MacOS` 
+
+> Install modules via `VENV`  
+```bash
+$ virtualenv env
+$ source env/bin/activate
+$ pip3 install -r requirements.txt
+```
+
+<br />
+
+> Set Up Flask Environment
+```bash
+$ export FLASK_APP=run.py
+$ export FLASK_ENV=development
+```
+
+<br />
+
+> Start the app
+```bash
+$ flask run
+```
+
+At this point, the app runs at `http://127.0.0.1:5000/`. 
+
+<br />
+
+### 👉 Set Up for `Windows` 
+
+> Install modules via `VENV` (windows) 
+```
+$ virtualenv env
+$ .\env\Scripts\activate
+$ pip3 install -r requirements.txt
+```
+
+<br />
+
+> Set Up Flask Environment
+
+```bash
+$ # CMD 
+$ set FLASK_APP=run.py
+$ set FLASK_ENV=development
+$
+$ # Powershell
+$ $env:FLASK_APP = ".\run.py"
+$ $env:FLASK_ENV = "development"
+```
+
+<br />
+> Start the app
+```bash
+$ flask run
+```
+At this point, the app runs at `http://127.0.0.1:5000/`. 
+```
 
 &#xa0;
 
